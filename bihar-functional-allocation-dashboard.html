@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Functional Allocation Chains — Bihar &amp; Patna | HSL-604</title>
+  <meta name="description" content="Seven constitutionally assigned functions traced from resources to results for Bihar and Patna — with full data metadata and measurement gaps.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="no-scroll">
+
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="loader-chain">
+      <span class="loader-node"></span>
+      <span class="loader-arrow">→</span>
+      <span class="loader-node"></span>
+      <span class="loader-arrow">→</span>
+      <span class="loader-node"></span>
+    </div>
+  </div>
+
+  <div class="ambient" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+  <div class="shell">
+
+    <header class="hero">
+      <p class="hero-kicker">HSL-604 · Public Finance · Functional Allocation Chains</p>
+      <h1>Who delivers <span class="highlight">what</span> — and can we measure it?</h1>
+      <p class="hero-sub">
+        Seven constitutionally assigned functions traced from resources to results for
+        <strong>Bihar</strong> (state) and <strong>Patna</strong> (city). Every metric carries its full
+        data metadata — source, publication lag, granularity, and denominator. Click any card to open its ledger entry.
+      </p>
+      <div class="hero-stats" id="hero-metrics"></div>
+      <div class="scroll-hint">
+        <div class="scroll-mouse"></div>
+        Explore the chain
+      </div>
+    </header>
+
+    <section class="chain-section" aria-label="Allocation chain stages">
+      <p class="chain-title">The functional allocation chain</p>
+      <div class="chain-flow">
+        <div class="chain-step">
+          <div class="chain-icon">IN</div>
+          <div class="chain-label">Input</div>
+          <div class="chain-def">resources committed</div>
+        </div>
+        <div class="chain-arrow" aria-hidden="true">
+          <svg viewBox="0 0 40 12" fill="none"><path d="M0 6h32M28 1l8 5-8 5" stroke="currentColor" stroke-width="1.5"/></svg>
+        </div>
+        <div class="chain-step">
+          <div class="chain-icon">OUT</div>
+          <div class="chain-label">Output</div>
+          <div class="chain-def">what was produced</div>
+        </div>
+        <div class="chain-arrow" aria-hidden="true">
+          <svg viewBox="0 0 40 12" fill="none"><path d="M0 6h32M28 1l8 5-8 5" stroke="currentColor" stroke-width="1.5"/></svg>
+        </div>
+        <div class="chain-step">
+          <div class="chain-icon">OC</div>
+          <div class="chain-label">Outcome</div>
+          <div class="chain-def">what changed for people</div>
+        </div>
+      </div>
+    </section>
+
+    <div id="live-banner" class="live-banner loading" role="status" aria-live="polite">
+      <span class="live-dot pulse"></span> Fetching live data from government dashboards…
+    </div>
+
+    <div class="legend" aria-label="Source type key">
+      <span class="legend-item"><span class="stamp survey">Survey</span> NFHS / PLFS / NSS / Census</span>
+      <span class="legend-item"><span class="stamp audit">Audit</span> CAG / NGT / parliamentary reply</span>
+      <span class="legend-item"><span class="stamp self">Self-reported</span> departmental portal</span>
+      <span class="legend-item"><span class="stamp statute">Statute</span> legal parameter</span>
+      <span class="legend-item"><span class="stamp gap">No data</span> documented measurement gap</span>
+    </div>
+
+    <div class="dashboard">
+      <aside class="sidebar">
+        <p class="sidebar-label">Constitutional functions</p>
+        <nav id="tabs" class="tab-list" role="tablist" aria-label="Function selector"></nav>
+      </aside>
+
+      <div class="panel-wrap">
+        <main id="panel" class="panel" role="tabpanel"></main>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <h3>Method note — the counterfactual problem</h3>
+      <p>
+        Outcomes below cannot be causally attributed to any single list entry without a counterfactual.
+        Where possible this dashboard leans on <strong>inter-state variation</strong> (professional tax, land reform)
+        and <strong>before/after series</strong> (NFHS-5 → NFHS-6). At least one outcome variable per function comes
+        from an independent survey or audit rather than the implementing department's own portal — these carry a
+        green <em>Survey</em> or navy <em>Audit</em> stamp. Indirect critical factors (political economy, jurisdictional
+        overlap, social structure) appear in the amber box under each function: they are named, not claimed as measured.
+      </p>
+    </footer>
+
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

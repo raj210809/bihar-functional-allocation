@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: bihar-functional-allocation
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r server/requirements.txt
+    startCommand: gunicorn --chdir server --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 120 app:app
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"

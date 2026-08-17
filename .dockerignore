@@ -1,0 +1,8 @@
+server/.venv
+__pycache__
+*.pyc
+.git
+.gitignore
+.DS_Store
+*.egg-info
+.env
