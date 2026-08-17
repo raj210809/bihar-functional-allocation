@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
@@ -25,14 +26,17 @@ HEADERS = {
 DBT_REFERER = {"Referer": "https://dbtbharat.gov.in/"}
 CURRENT_FY = "2024_2025"
 BIHAR_STATE_ID = 10
-REQUEST_TIMEOUT = 40
+# Vercel Hobby functions die at 10s — keep outbound fetches short there.
+IS_VERCEL = os.environ.get("VERCEL") == "1"
+REQUEST_TIMEOUT = 3 if IS_VERCEL else 40
+REQUEST_RETRIES = 1 if IS_VERCEL else 2
 
 
 def _request_get(url: str, **kwargs: Any) -> requests.Response:
     kwargs.setdefault("headers", HEADERS)
     kwargs.setdefault("timeout", REQUEST_TIMEOUT)
     last_err: Exception | None = None
-    for _ in range(2):
+    for _ in range(REQUEST_RETRIES):
         try:
             resp = requests.get(url, **kwargs)
             resp.raise_for_status()
@@ -177,7 +181,7 @@ def fetch_bharatnet_bihar() -> dict[str, Any]:
     for url in urls:
         try:
             resp = requests.get(
-                url, headers=HEADERS, timeout=15, verify=False
+                url, headers=HEADERS, timeout=REQUEST_TIMEOUT, verify=False
             )
             resp.raise_for_status()
             text = resp.text

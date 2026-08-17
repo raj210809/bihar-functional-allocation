@@ -18,6 +18,7 @@ from scrapers import SCRAPERS, fetch_all_live_data
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 ROOT = Path(__file__).resolve().parent.parent
+IS_VERCEL = os.environ.get("VERCEL") == "1"
 
 app = Flask(__name__)
 CORS(app)
@@ -88,7 +89,10 @@ def _warm_on_boot() -> None:
         pass
 
 
-threading.Thread(target=_warm_on_boot, daemon=True, name="warm-live").start()
+# Serverless workers are killed after the response — warming in the background
+# only helps a long-running host (local / Docker / Koyeb).
+if not IS_VERCEL:
+    threading.Thread(target=_warm_on_boot, daemon=True, name="warm-live").start()
 
 
 @app.route("/")
@@ -106,6 +110,8 @@ def health():
 @app.route("/api/live-data")
 def live_data():
     force = request.args.get("refresh") in {"1", "true", "yes"}
+    if IS_VERCEL:
+        return jsonify(get_live(force=force, wait=7.0))
     wait = 8.0 if force else 50.0
     if force:
         threading.Thread(target=lambda: get_live(force=True, wait=90), daemon=True).start()
@@ -120,6 +126,8 @@ def live_data():
 
 @app.route("/api/live-data/refresh")
 def live_data_refresh():
+    if IS_VERCEL:
+        return jsonify(get_live(force=True, wait=7.0))
     threading.Thread(target=lambda: get_live(force=True, wait=90), daemon=True).start()
     with _lock:
         if _payload is not None:
