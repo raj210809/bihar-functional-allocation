@@ -140,11 +140,10 @@
             </summary>
             <div class="meta">
               <dl>
-                <dt>Source</dt><dd>${m.src}${live.live ? ` <em class="live-src">(refreshed from ${livePayload.sources[m.liveId].source})</em>` : ""}</dd>
-                <dt>Pub. lag</dt><dd>${m.lag}</dd>
-                <dt>Granularity</dt><dd>${m.gran}</dd>
-                <dt>Denominator</dt><dd>${m.den}</dd>
-                <dt>Link</dt><dd><a href="${m.url}" target="_blank" rel="noopener">${formatUrl(m.url)}</a></dd>
+                <dt>Source</dt><dd>${escapeHtml(m.src)}${live.live ? ` <em class="live-src">(refreshed from ${escapeHtml(livePayload.sources[m.liveId].source)})</em>` : ""}</dd>
+                <dt>Pub. lag</dt><dd>${escapeHtml(m.lag)}</dd>
+                <dt>Granularity</dt><dd>${escapeHtml(m.gran)}</dd>
+                <dt>Denominator</dt><dd>${escapeHtml(m.den)}</dd>
               </dl>
               <div class="why">${m.why}</div>
             </div>
@@ -179,10 +178,6 @@
 
   function escapeAttr(str) {
     return escapeHtml(str);
-  }
-
-  function formatUrl(url) {
-    return url.replace(/^https?:\/\//, "").split("/")[0];
   }
 
   function show(index) {
